@@ -1,23 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+import Card from "./components/Card";
+import Footer from "./components/Footer";
+import Layout from "./components/Layout";
+import React, { useState, useEffect } from "react";
+import Loader from "./components/Loader";
 
 function App() {
+  const [state, setState] = useState({
+    info: [],
+    results: [],
+  });
+
+  const [loading, setLoading] = useState({
+    loading: true,
+    error: null,
+  });
+
+  const [page, setNext] = useState({
+    netxPage: 1,
+  });
+
+  const fetchCharacters = async () => {
+    setLoading({ loading: true, error: null });
+    try {
+      const response = await fetch(
+        `http://rickandmortyapi.com/api/character?page=${page.netxPage}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setState({
+        info: data.info,
+        results: [].concat(state.results, data.results),
+      });
+      setLoading({ loading: false, error: null });
+      setNext({
+        netxPage: page.netxPage + 1,
+      });
+    } catch (error) {
+      setLoading({ loading: false, error: true });
+      console.log("error");
+    }
+  };
+
+  useEffect(() => {
+    fetchCharacters();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout />
+      <Card data={state.results} error={loading.error} />
+      {loading.loading ? (
+        <div>
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <button onClick={fetchCharacters} className="btn btn-success">
+            Load More
+          </button>
+        </>
+      )}
+      <Footer />
     </div>
   );
 }

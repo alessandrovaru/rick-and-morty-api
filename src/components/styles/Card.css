@@ -1,0 +1,29 @@
+.my-card {
+  border: 2px solid #fff;
+  cursor: pointer;
+  width: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.my-card img {
+  width: 100%;
+}
+
+.card-info {
+  padding: 20px;
+  height: 180px;
+  text-align: left;
+}
+
+.my-card:hover {
+  border: 2px solid #69da52;
+  box-shadow: 0 0 8px #69da52;
+}
+
+.card-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

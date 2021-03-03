@@ -25,7 +25,7 @@ function App() {
     setLoading({ loading: true, error: null });
     try {
       const response = await fetch(
-        `http://rickandmortyapi.com/api/character?page=${page.netxPage}`
+        `https://rickandmortyapi.com/api/character?page=${page.netxPage}`
       );
       const data = await response.json();
       console.log(data);

@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.my-card h3 {
+  font-size: 18px;
+}
+
 .my-card img {
   width: 100%;
 }
